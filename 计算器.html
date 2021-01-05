@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>计算器</title>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+		<style type="text/css">
+			.panel {
+				padding: 5px;
+			}
+
+			.row {
+				margin-top: 15px;
+			}
+		</style>
+		<script src="js/Vue2.6.11.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app" class="container">
+			<div class="row">
+				<div class="col-md-6 col-md-offset-3">
+					<div class="panel panel-primary">
+						<div class="panel-body">
+							<div class="row ">
+								<div class="form-group">
+									<input type="text" name="" class="form-control" v-model="result" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-3">
+									<button type="button" class="btn btn-default btn-block" @click="signFun('+')">+</button>
+								</div>
+								<div class="col-sm-3">
+									<button type="button" class="btn btn-default btn-block" @click="signFun('-')">-</button>
+								</div>
+								<div class="col-sm-3">
+									<button type="button" class="btn btn-default btn-block" @click="signFun('*')">*</button>
+								</div>
+								<div class="col-sm-3">
+									<button type="button" class="btn btn-default btn-block" @click="signFun('/')">/</button>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-3">
+									<button type="button" class="btn btn-default btn-block" @click="numEvent('1')">1</button>
+								</div>
+								<div class="col-sm-3">
+									<button type="button" class="btn btn-default btn-block" @click="numEvent('2')">2</button>
+								</div>
+								<div class="col-sm-3">
+									<button type="button" class="btn btn-default btn-block" @click="numEvent('3')">3</button>
+								</div>
+								<div class="col-sm-3">
+									<button type="button" class="btn btn-default btn-block" @click="numEvent('4')">4</button>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-3">
+									<button type="button" class="btn btn-default btn-block" @click="numEvent('5')">5</button>
+								</div>
+								<div class="col-sm-3">
+									<button type="button" class="btn btn-default btn-block" @click="numEvent('6')">6</button>
+								</div>
+								<div class="col-sm-3">
+									<button type="button" class="btn btn-default btn-block" @click="numEvent('7')">7</button>
+								</div>
+								<div class="col-sm-3">
+									<button type="button" class="btn btn-default btn-block" @click="numEvent('8')">8</button>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-3">
+									<button type="button" class="btn btn-default btn-block" @click="numEvent('9')">9</button>
+								</div>
+								<div class="col-sm-3">
+									<button type="button" class="btn btn-default btn-block" @click="numEvent('0')">0</button>
+								</div>
+								<div class="col-sm-3">
+									<button type="button" class="btn btn-default btn-block" @click="resu">=</button>
+								</div>
+								<div class="col-sm-3">
+									<button type="button" class="btn btn-default btn-block" @click="zero">C</button>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-3">
+									<button type="button" class="btn btn-default btn-block" @click="special('pi')">pi</button>
+								</div>
+								<div class="col-sm-3">
+									<button type="button" class="btn btn-default btn-block" @click="special('e')">e</button>
+								</div>
+								<div class="col-sm-3">
+									<button type="button" class="btn btn-default btn-block" @click="special('sqrt')">sprt</button>
+								</div>
+								<div class="col-sm-3">
+									<button type="button" class="btn btn-default btn-block" @click="special('1/X')">1/X</button>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-sm-3">
+									<button type="button" class="btn btn-default btn-block" @click="special('sin')">sin</button>
+								</div>
+								<div class="col-sm-3">
+									<button type="button" class="btn btn-default btn-block" @click="special('cos')">cos</button>
+								</div>
+								<div class="col-sm-3">
+									<button type="button" class="btn btn-default btn-block" @click="special('tan')">tan</button>
+								</div>
+								<div class="col-sm-3">
+									<button type="button" class="btn btn-default btn-block" @click="special('asin')">asin</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			var vm = new Vue({
+				el: '#app',
+				data: {
+					result: '',
+					sign: '',
+					priorNumber: ''
+				},
+				methods: {
+					numEvent: function(data) {
+						this.result = this.result + data
+					},
+					signFun: function(data) {
+						
+						this.sign = data
+						this.priorNumber = this.priorNumber+this.result+this.sign
+						this.result = ''
+					},
+					resu: function() {
+						switch (this.sign) {
+							case '+':
+								this.result = eval(this.priorNumber+this.result)
+								break;
+							case '-':
+								this.result = eval(this.priorNumber+this.result)
+								break;
+							case '*':
+								this.result = eval(this.priorNumber+this.result)
+								break;
+							case '/':
+								this.result = eval(this.priorNumber+this.result)
+								break;
+						}
+						
+						this.priorNumber=this.sign=''
+					},
+					zero:function(){
+						this.result=this.priorNumber=this.sign=''
+						
+					},
+					special:function(data){
+						switch(data){
+							case 'sin':
+							this.result=Math.sin(this.result)
+							break
+							case 'cos':
+							this.result=Math.cos(this.result)
+							break
+							case 'tan':
+							this.result=Math.tan(this.result)
+							break
+							case 'asin':
+							this.result=Math.asin(this.result)
+							break
+							case 'e':
+							this.result=Math.E
+							break
+							case 'pi':
+							this.result=Math.PI
+							break
+							case 'sqrt':
+							this.result=Math.sqrt(this.result)
+							break
+							case '1/X':
+							this.result=1/parseFloat(this.result)
+							break
+						}
+					}
+				}
+			})
+		</script>
+	</body>
+</html>
